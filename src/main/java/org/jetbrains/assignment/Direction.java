@@ -1,5 +1,6 @@
 package org.jetbrains.assignment;
 
+import java.util.ArrayList;
 import java.util.List;
 public class Direction {
     public CardinalDirection direction;
@@ -10,26 +11,22 @@ public class Direction {
         steps = numberOfSteps;
     }
 
-    public static Direction getDirection(Coordinate startingPoint, Coordinate endpointPoint) {
-        Direction direction = new Direction(null, null);
+    public static List<Direction> getDirection(Coordinate startingPoint, Coordinate endpointPoint) {
+        List<Direction> directionList = new ArrayList<>();
         if (startingPoint.x > endpointPoint.x) {
-            direction.direction = CardinalDirection.WEST;
-            direction.steps = Math.abs(startingPoint.x - endpointPoint.x);
+            directionList.add(new Direction(CardinalDirection.WEST, Math.abs(startingPoint.x - endpointPoint.x)));
         }
         else if (startingPoint.x < endpointPoint.x) {
-            direction.direction = CardinalDirection.EAST;
-            direction.steps = Math.abs(endpointPoint.x - startingPoint.x);
+            directionList.add(new Direction(CardinalDirection.EAST, Math.abs(endpointPoint.x - startingPoint.x)));
         }
-        else if (startingPoint.y > endpointPoint.y) {
-            direction.direction = CardinalDirection.SOUTH;
-            direction.steps = Math.abs(startingPoint.y - endpointPoint.y);
+        if (startingPoint.y > endpointPoint.y) {
+            directionList.add(new Direction(CardinalDirection.SOUTH, Math.abs(startingPoint.y - endpointPoint.y)));
         }
-        else { // endingPoint.y > startingPoint.y
-            direction.direction = CardinalDirection.NORTH;
-            direction.steps = Math.abs(endpointPoint.y - startingPoint.y);
+        else if (endpointPoint.y > startingPoint.y) {
+            directionList.add(new Direction(CardinalDirection.NORTH, Math.abs(endpointPoint.y - startingPoint.y)));
         }
 
-        return direction;
+        return directionList;
     }
 
 }

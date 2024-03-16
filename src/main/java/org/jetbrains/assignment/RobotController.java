@@ -29,10 +29,11 @@ class RobotController {
     @PostMapping("/moves")
     List<Direction> getMoves(@RequestBody List<Coordinate> coordinateList) {
         List<Direction> directionList = new ArrayList<Direction>();
-        Coordinate lastCoordinate = new Coordinate(0,0);
-        for (Coordinate coordinate : coordinateList) {
-            directionList.add(Direction.getDirection(lastCoordinate, coordinate));
-            lastCoordinate = coordinate;
+        Coordinate lastCoordinate = coordinateList.get(0);
+        for (int i = 1; i < coordinateList.size(); i++) {
+            Coordinate nextCoordinate = coordinateList.get(i);
+            directionList.addAll(Direction.getDirection(lastCoordinate, nextCoordinate));
+            lastCoordinate = nextCoordinate;
         }
 
         return directionList;
